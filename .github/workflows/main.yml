@@ -1,0 +1,50 @@
+name: Build and Push Custom Docker Image
+
+on:
+  workflow_dispatch: # Laat je de actie handmatig starten via de knop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+
+    steps:
+      - name: Checkout jeletask2mqtt
+        uses: actions/checkout@v4
+
+      - name: Checkout custom jeletask core
+        uses: actions/checkout@v4
+        with:
+          repository: dsvdglenn/jeletask
+          path: custom-core
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21' # De meeste recente Spring Boot projecten gebruiken 17 of 21
+          cache: 'maven'
+
+      - name: Build custom core
+        run: |
+          cd custom-core
+          mvn clean install -DskipTests
+
+      - name: Build jeletask2mqtt
+        run: mvn clean package -DskipTests
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ghcr.io/${{ github.repository_owner }}/jeletask2mqtt:custom
