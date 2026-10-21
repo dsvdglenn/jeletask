@@ -1,11 +1,11 @@
 name: Build and Push Custom Docker Image
 
 on:
-  workflow_dispatch: # Laat je de actie handmatig starten via de knop
+  workflow_dispatch:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       packages: write
       contents: read
@@ -21,10 +21,10 @@ jobs:
           path: custom-core
 
       - name: Setup Java
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
-          java-version: '21' # De meeste recente Spring Boot projecten gebruiken 17 of 21
+          java-version: '21'
           cache: 'maven'
 
       - name: Build custom core
