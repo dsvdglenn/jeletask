@@ -58,7 +58,7 @@ public class HASensorConfig extends HAReadOnlyConfig<HASensorConfig> {
             this.put("current_temperature_template", "{{ value_json.current_temperature }}");
             this.put("temperature_state_template", "{{ value_json.target_temperature }}");
             this.put("temperature_command_template", """
-                    { "state": "ON", "action": "TARGET", "target_temperature": {{ value|float }} }
+                    { "state": "ON", "action": "TOGGLE", "target_temperature": {{ value|float }} }
                     """);
             this.put("mode_state_template", """
                     {% if value_json.mode|upper == "VENT" %}
