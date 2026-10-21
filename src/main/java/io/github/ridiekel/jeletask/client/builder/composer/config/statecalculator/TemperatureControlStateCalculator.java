@@ -69,6 +69,7 @@ public class TemperatureControlStateCalculator extends StateCalculatorSupport<Te
             .add(ValidTemperatureControlSpeed.HIGH, 99)
             .add(ValidTemperatureControlSpeed.AUTO, 89);
     private static final Mapper<ValidTemperatureControlPreset> PRESET_MAPPER = new Mapper<>(ValidTemperatureControlPreset.class, UNSIGNED_BYTE)
+            .add(ValidTemperatureControlPreset.OFF, 0)
             .add(ValidTemperatureControlPreset.FROST, 24)
             .add(ValidTemperatureControlPreset.DAY, 26)
             .add(ValidTemperatureControlPreset.NIGHT, 25)
