@@ -43,6 +43,15 @@ public class HASensorConfig extends HAReadOnlyConfig<HASensorConfig> {
                     """);
             this.put("mode_state_topic", "~/state");
             this.put("mode_command_topic", "~/set");
+            
+            this.putArray("preset_modes", new String[]{"OFF", "FROST", "DAY", "NIGHT", "ECO"});
+            this.put("preset_mode_state_topic", "~/state");
+            this.put("preset_mode_command_topic", "~/set");
+            this.put("preset_mode_value_template", "{{ value_json.preset }}");
+            this.put("preset_mode_command_template", """
+                    { "state": "ON", "action": "PRESET", "preset": "{{ value }}" }
+                    """);
+            
             this.put("fan_mode_state_topic", "~/state");
             this.put("fan_mode_command_topic", "~/set");
             this.put("current_temperature_template", "{{ value_json.current_temperature }}");
