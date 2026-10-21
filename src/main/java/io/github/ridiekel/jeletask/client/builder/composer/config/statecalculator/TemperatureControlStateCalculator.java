@@ -258,6 +258,7 @@ public class TemperatureControlStateCalculator extends StateCalculatorSupport<Te
     }
 
     public enum ValidTemperatureControlPreset {
+        OFF,
         FROST,
         DAY,
         NIGHT,
