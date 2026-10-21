@@ -49,8 +49,9 @@ public class HASensorConfig extends HAReadOnlyConfig<HASensorConfig> {
             this.put("preset_mode_command_topic", "~/set");
             this.put("preset_mode_value_template", "{{ value_json.preset }}");
             this.put("preset_mode_command_template", """
-                    { "state": "ON", "action": "PRESET", "preset": "{{ value }}" }
-                    """);
+                { "state": "ON", "preset": "{{ value }}" }
+                """);
+            
             
             this.put("fan_mode_state_topic", "~/state");
             this.put("fan_mode_command_topic", "~/set");
