@@ -55,7 +55,8 @@ import static io.github.ridiekel.jeletask.client.builder.composer.config.stateca
 public class TemperatureControlStateCalculator extends StateCalculatorSupport<TemperatureControlState> {
     public static final OnOffToggleStateCalculator ON_OFF_TOGGLE_STATE_CALCULATOR = new OnOffToggleStateCalculator();
     private static final Mapper<ValidTemperatureControlAction> ACTION_MAPPER = new Mapper<>(ValidTemperatureControlAction.class, UNSIGNED_BYTE)
-            .add(ValidTemperatureControlAction.TARGET, 87);
+            .add(ValidTemperatureControlAction.TARGET, 87)
+            .add(ValidTemperatureControlAction.TOGGLE, 104);
     private static final Mapper<ValidTemperatureControlMode> MODE_MAPPER = new Mapper<>(ValidTemperatureControlMode.class, UNSIGNED_BYTE)
             .add(ValidTemperatureControlMode.OFF, 0)
             .add(ValidTemperatureControlMode.AUTO, 94)
@@ -222,6 +223,10 @@ public class TemperatureControlStateCalculator extends StateCalculatorSupport<Te
                 (c, s, b) -> {
                     s.setTargetTemperature(TemperatureStateCalculator.bytesToBigDecimal(c, new byte[]{b[1], b[2]}));
                 }
+        ),
+        TOGGLE(
+                s -> new byte[]{},
+                (c, s, b) -> {}
         );
 
         private final Function<TemperatureControlState, byte[]> getData;
